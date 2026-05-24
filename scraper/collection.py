@@ -1,16 +1,19 @@
 import requests
+from constants import Franchise
+import constants
 
 
-def get_section_index (season_number: int, section_name: str) -> str | None:
+def get_section_index (franchise: Franchise, season_number: int, section_name: str) -> str | None:
     params = {
         "action": "parse",
-        "page": f"RuPaul's Drag Race (Season {season_number})",
+        "page": franchise.page_name.format(season_number),
         "prop": "sections",
         "format": "json"
     }
 
+    
     response = requests.get(
-        "https://rupaulsdragrace.fandom.com/api.php",
+        constants.WIKI_URL,
         params=params
     )
     data = response.json()
@@ -24,23 +27,32 @@ def get_section_index (season_number: int, section_name: str) -> str | None:
     return None
 
 
-season_number = 18
 
-index = get_section_index(season_number, "Contestants")
+def get_content(franchise: Franchise, season_number: int, section_name: str) -> str | None:
+    index = get_section_index(franchise, season_number, section_name)
 
+    if index is None:
 
-params = {
-        "action": "parse",
-        "page": f"RuPaul's Drag Race (Season {season_number})",
-        "prop": "wikitext",
-        "section": index,
-        "format": "json"
-    }
+        print(f'Season {season_number} does not contain {section_name}')
+        return
+    
+    params = {
+            "action": "parse",
+            "page": franchise.page_name.format(season_number),
+            "prop": "wikitext",
+            "section": index,
+            "format": "json"
+        }
 
-response = requests.get(
-        "https://rupaulsdragrace.fandom.com/api.php",
-        params=params
-    )
+    response = requests.get(
+            constants.WIKI_URL,
+            params=params
+        )
 
-data = response.json()
-print(data["parse"]["wikitext"]["*"])
+    data = response.json()
+
+    return data["parse"]["wikitext"]["*"]
+
+print(get_content(Franchise.AS_US, 7, "Contestants"))
+#f = Franchise.US
+#print(f.page_name.format(8))
