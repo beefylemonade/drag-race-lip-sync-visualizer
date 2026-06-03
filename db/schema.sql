@@ -31,7 +31,8 @@ CREATE TABLE
         franchise_id INTEGER NOT NULL REFERENCES franchise (id),
         season_type season_type NOT NULL,
         season_number INTEGER NOT NULL,
-        title VARCHAR(200) episode_count INTEGER,
+        title VARCHAR(200),
+        episode_count INTEGER,
         premiere_date DATE,
         UNIQUE (franchise_id, season_type, season_number)
     );
