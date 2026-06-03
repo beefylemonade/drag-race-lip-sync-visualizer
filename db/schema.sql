@@ -29,7 +29,8 @@ CREATE TABLE
     season (
         id SERIAL PRIMARY KEY,
         franchise_id INTEGER NOT NULL REFERENCES franchise (id),
-        season_type season_type season_number INTEGER NOT NULL,
+        season_type season_type,
+        season_number INTEGER NOT NULL,
         episode_count INTEGER,
         premiere_date DATE,
         UNIQUE (franchise_id, season_type, season_number)
@@ -44,6 +45,16 @@ CREATE TABLE
         title VARCHAR(200),
         air_date DATE,
         UNIQUE (season_id, episode_number)
+    );
+
+-- SEASON_CONTESTANT
+CREATE TABLE
+    season_contestant (
+        id SERIAL PRIMARY KEY,
+        season_id INTEGER NOT NULL REFERENCES season (id),
+        contestant_id INTEGER NOT NULL REFERENCES contestant (id),
+        role cast_role NOT NULL DEFAULT 'contestant',
+        UNIQUE (season_id, contestant_id)
     );
 
 -- CONTESTANT
