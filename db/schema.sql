@@ -114,6 +114,6 @@ CREATE TABLE
         id SERIAL PRIMARY KEY,
         song_id INTEGER NOT NULL REFERENCES song (id),
         artist_id INTEGER NOT NULL REFERENCES artist (id),
-        role artist_role NOT NULL DEFAULT 'primary',
+        artist_type artist_type NOT NULL DEFAULT 'primary',
         UNIQUE (song_id, artist_id)
     );
