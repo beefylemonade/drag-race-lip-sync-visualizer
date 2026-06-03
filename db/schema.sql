@@ -29,9 +29,9 @@ CREATE TABLE
     season (
         id SERIAL PRIMARY KEY,
         franchise_id INTEGER NOT NULL REFERENCES franchise (id),
-        season_type season_type,
+        season_type season_type NOT NULL,
         season_number INTEGER NOT NULL,
-        episode_count INTEGER,
+        title VARCHAR(200) episode_count INTEGER,
         premiere_date DATE,
         UNIQUE (franchise_id, season_type, season_number)
     );
@@ -62,6 +62,7 @@ CREATE TABLE
     contestant (
         id SERIAL PRIMARY KEY,
         drag_name VARCHAR(100) NOT NULL,
+        image_url VARCHAR(500),
         redacted BOOLEAN DEFAULT FALSE
     );
 
@@ -80,8 +81,7 @@ CREATE TABLE
         id SERIAL PRIMARY KEY,
         episode_id INTEGER NOT NULL REFERENCES episode (id),
         song_id INTEGER REFERENCES song (id),
-        lipsync_type lipsync_type NOT NULL,
-        order_in_episode SMALLINT NOT NULL DEFAULT 1
+        lipsync_type lipsync_type NOT NULL
     );
 
 -- LIPSYNC_PARTICIPANT
