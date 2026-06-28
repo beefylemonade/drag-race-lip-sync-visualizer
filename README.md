@@ -2,9 +2,9 @@
 A data visualization of Rupaul's Drag Race's lip sync across all seasons and franchises.
 
 ## Scraper Usage (WIP)
-python main.py --all
-python main.py --franchise US
-python main.py --franchise US --season 19
+- python main.py --all
+- python main.py --franchise US
+- python main.py --franchise US --season 19
 
 ## Arguments
 

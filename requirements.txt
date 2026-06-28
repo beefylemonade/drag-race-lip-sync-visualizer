@@ -1,0 +1,10 @@
+flask
+flask-smorest
+python-dotenv
+sqlalchemy
+flask-sqlalchemy
+pydantic
+google-generativeai
+psycopg2-binary
+requests
+python-dotenv
