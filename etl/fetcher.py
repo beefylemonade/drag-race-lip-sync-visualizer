@@ -1,6 +1,6 @@
 import requests
-from constants import Franchise
-import constants
+from core.constants import Franchise
+import core.constants as CONSTANTS
 
 
 def get_section_index (franchise: Franchise, season_number: int, section_name: str) -> str | None:
@@ -13,7 +13,7 @@ def get_section_index (franchise: Franchise, season_number: int, section_name: s
 
     
     response = requests.get(
-        constants.WIKI_URL,
+        CONSTANTS.WIKI_URL,
         params=params
     )
     data = response.json()
@@ -45,7 +45,7 @@ def get_content(franchise: Franchise, season_number: int, section_name: str) -> 
         }
 
     response = requests.get(
-            constants.WIKI_URL,
+            CONSTANTS.WIKI_URL,
             params=params
         )
 

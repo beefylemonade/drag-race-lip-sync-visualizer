@@ -1,6 +1,6 @@
 import collection
-import constants
-from constants import Franchise
+import core.constants as CONSTANTS
+from core.constants import Franchise
 import argparse
 import sys
 

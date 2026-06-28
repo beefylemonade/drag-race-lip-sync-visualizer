@@ -7,7 +7,7 @@ Return ONLY a valid JSON object. No explanation, no markdown, no code fences.
 The JSON must follow this exact structure:
 {{
     "franchise_short_code": "<one of: US, UK, CA, AU, ES, PH, NL, FR, DU, IT, SE, BE, GE>",
-    "season_type":          "<one of: regular, all_stars, vs_the_world, global, other>",
+    "season_type":          "<one of: regular, all_stars, vs_the_world, global, royal, other>",
     "season_number":        <integer>,
     "episode_count":        <integer or null>,
     "premiere_date":        "<YYYY-MM-DD or null>",
