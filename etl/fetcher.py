@@ -1,6 +1,6 @@
 import requests
-from core.constants import Franchise
-import core.constants as CONSTANTS
+from constants import Franchise
+import constants as CONSTANTS
 
 
 def get_section_index (franchise: Franchise, season_number: int, section_name: str) -> str | None:
@@ -53,6 +53,14 @@ def get_content(franchise: Franchise, season_number: int, section_name: str) -> 
 
     return data["parse"]["wikitext"]["*"]
 
-print(get_content(Franchise.AS_US, 7, "Contestants"))
+#print(get_content(Franchise.AS_US, 7, "Contestants"))
 #f = Franchise.US
 #print(f.page_name.format(8))
+
+
+def fetch_wiki_page(franchise, season_number):
+
+    print(f"Fetching wiki page of {franchise.name} ({franchise.title}) season {season_number}")
+
+    return get_content(franchise, season_number, "Contestants")
+    
