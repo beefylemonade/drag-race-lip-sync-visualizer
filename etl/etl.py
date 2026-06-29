@@ -2,30 +2,17 @@ from constants import Franchise
 import fetcher as fetcher
 import extractor as extractor
 import validation_report as validation_report
-import os
 
-CACHING_PAGES = True
-CACHE_LOCATION = "./wiki_pages"
+
+use_cache = True
+
 
 def run_etl(franchise: Franchise, season_number: int):
     """Full ETL pipeline for a single season."""
 
-    # Step 1 — Fetch
-    if CACHING_PAGES:
-        print("Caching enabled")
-        file_path = f"{CACHE_LOCATION}/{franchise.name}_{season_number}.txt"
-        if os.path.exists(file_path):
-            with open(file_path, "r", encoding="utf-8") as f:
-                wiki_text = f.read()
-                print(f"Read wiki_text from {file_path}")
+    # Step 1 — Fetch from local copy or from the wiki page
     
-        else:
-            wiki_text = fetcher.fetch_wiki_page(franchise, season_number)
-            with open(file_path, "w", encoding="utf-8") as f:
-                f.write(wiki_text)
-                print(f"Saved wiki_text to {file_path}")
-    else:
-        wiki_text = fetcher.fetch_wiki_page(franchise, season_number)
+    wiki_text = fetcher.fetch_wiki_page(franchise, season_number, use_cache = use_cache)
 
 
     # Step 2 — Extract

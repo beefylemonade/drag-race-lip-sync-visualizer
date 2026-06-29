@@ -1,7 +1,9 @@
 import requests
 from constants import Franchise
 import constants as CONSTANTS
+import os
 
+CACHE_LOCATION = "./wiki_pages"
 
 def get_section_index (franchise: Franchise, season_number: int, section_name: str) -> str | None:
     params = {
@@ -53,14 +55,37 @@ def get_content(franchise: Franchise, season_number: int, section_name: str) -> 
 
     return data["parse"]["wikitext"]["*"]
 
-#print(get_content(Franchise.AS_US, 7, "Contestants"))
-#f = Franchise.US
-#print(f.page_name.format(8))
+def fetch_wiki_page(franchise:str, season_number:int, use_cache:bool) -> str | None:
 
+    wiki_text = None
+    if use_cache:
 
-def fetch_wiki_page(franchise, season_number):
+        try:
+            os.makedirs(CACHE_LOCATION, exist_ok=True)
+            print(f"Cache directory created or already exists: {CACHE_LOCATION}")
+        except OSError as e:
+            print(f"Error creating directory '{CACHE_LOCATION}': {e}")
+            use_cache = False # Disable error if fail to create directory for caching
+    
+    if use_cache:
+        print("Caching enabled. Reading from local copies or saving fetched pages locally.")
+        file_path = f"{CACHE_LOCATION}/{franchise.name}_{season_number}.txt"
+        if os.path.exists(file_path):
+            with open(file_path, "r", encoding="utf-8") as f:
+                wiki_text = f.read()
+                print(f"Read wiki page from {file_path}")
+    
+        else:
+            print(f"Fetching wiki page of {franchise.name} ({franchise.title}) season {season_number}")
+            get_content(franchise, season_number, "Contestants")
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(wiki_text)
+                print(f"Saved wiki page to {file_path}")
+    else:
+        print(f"Fetching wiki page of {franchise.name} ({franchise.title}) season {season_number}")
+        wiki_text = get_content(franchise, season_number, "Contestants")
 
-    print(f"Fetching wiki page of {franchise.name} ({franchise.title}) season {season_number}")
+    
 
-    return get_content(franchise, season_number, "Contestants")
+    return wiki_text
     
