@@ -1,7 +1,7 @@
 from constants import Franchise
 import argparse
 import sys
-import etl as etl
+from etl.etl import run_etl
 
 def parse_franchise(name: str) -> Franchise:
     """
@@ -96,7 +96,7 @@ def collect_franchise(franchise: Franchise, season_number: int = None):
     for s in seasons:
 
         print(f"Processing season {s}")
-        etl.run_etl(franchise,s)
+        run_etl(franchise,s)
 
 # Extract : Initial run for collecting data from previously aired season for all franchise
 # In the future, a run can be done during or after a season of a franchise has finished airing.

@@ -4,7 +4,7 @@ import constants as CONSTANTS
 import os
 import time
 
-CACHE_LOCATION = "./wiki_pages"
+CACHE_LOCATION = "./data/wiki_pages"
 
 SLEEP_DURATION = 1.0    # seconds — safe default for MediaWiki API
 

@@ -1,5 +1,12 @@
 # Project files
-reports/
+
+data/wiki_pages/*
+!data/wiki_pages/.gitkeep
+
+data/extracted/*
+!data/extracted/.gitkeep
+
+reports/*
 !reports/.gitkeep
 
 # Byte-compiled / optimized / DLL files
