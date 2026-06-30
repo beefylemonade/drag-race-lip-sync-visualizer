@@ -2,8 +2,30 @@ import requests
 from constants import Franchise
 import constants as CONSTANTS
 import os
+import time
 
 CACHE_LOCATION = "./wiki_pages"
+
+SLEEP_DURATION = 1.0    # seconds — safe default for MediaWiki API
+
+
+def polite_fetch_with_retry(url: str, params: dict, retry_count: int = 3) -> requests.Response:
+    for attempt in range(retry_count):
+        response = requests.get(url, params=params)
+
+        if response.status_code == 200:
+            return response
+
+        elif response.status_code == 429:
+            wait = 2 ** attempt 
+            print(f"Rate limited. Waiting {wait}s before retry {attempt + 1}/{retry_count}...")
+            time.sleep(wait)
+
+        else:
+            response.raise_for_status()  # raises an exception for 4xx/5xx errors
+
+    raise RuntimeError(f"Failed to fetch after {retry_count} retries: {url}")
+
 
 def get_section_index (franchise: Franchise, season_number: int, section_name: str) -> str | None:
     params = {
@@ -14,7 +36,7 @@ def get_section_index (franchise: Franchise, season_number: int, section_name: s
     }
 
     
-    response = requests.get(
+    response = polite_fetch_with_retry(
         CONSTANTS.WIKI_URL,
         params=params
     )
@@ -46,7 +68,7 @@ def get_content(franchise: Franchise, season_number: int, section_name: str) -> 
             "format": "json"
         }
 
-    response = requests.get(
+    response = polite_fetch_with_retry(
             CONSTANTS.WIKI_URL,
             params=params
         )
@@ -77,7 +99,7 @@ def fetch_wiki_page(franchise:str, season_number:int, use_cache:bool) -> str | N
     
         else:
             print(f"Fetching wiki page of {franchise.name} ({franchise.title}) season {season_number}")
-            get_content(franchise, season_number, "Contestants")
+            wiki_text=get_content(franchise, season_number, "Contestants")
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(wiki_text)
                 print(f"Saved wiki page to {file_path}")
