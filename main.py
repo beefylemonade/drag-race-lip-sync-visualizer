@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from constants import Franchise
 import argparse
 import sys

@@ -99,13 +99,13 @@ def fetch_wiki_page(franchise:str, season_number:int, use_cache:bool) -> str | N
     
         else:
             print(f"Fetching wiki page of {franchise.name} ({franchise.title}) season {season_number}")
-            wiki_text=get_content(franchise, season_number, "Contestants")
+            wiki_text=get_content(franchise, season_number, "Episodes")
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(wiki_text)
                 print(f"Saved wiki page to {file_path}")
     else:
         print(f"Fetching wiki page of {franchise.name} ({franchise.title}) season {season_number}")
-        wiki_text = get_content(franchise, season_number, "Contestants")
+        wiki_text = get_content(franchise, season_number, "Episodes")
 
     
 

@@ -1,10 +1,11 @@
 from constants import Franchise
 from etl.fetcher import fetch_wiki_page
-from etl.extractor import extract_season_data
-#from etl.validation_report import 
+from etl.extractor import extract_data
+from etl.validation_report import ValidationReport
 
 
 use_cache = True
+report_path = './reports'
 
 
 def run_etl(franchise: Franchise, season_number: int):
@@ -16,11 +17,11 @@ def run_etl(franchise: Franchise, season_number: int):
 
 
     # Step 2 — Extract
-    season_model = extract_season_data(wiki_text, franchise, season_number)
+    season_model = extract_data(wiki_text, franchise, season_number)
 
     # Step 3 — Insert
-    #report = ValidationReport(franchise=franchise.short_code, season_number=season_number)
+    report = ValidationReport(franchise_short_code=franchise.name, season_number=season_number)
     #insert_season(season_model, db_conn, report)
 
     # Step 4 — Write report
-    #report.write()
+    report.write(report_path)
