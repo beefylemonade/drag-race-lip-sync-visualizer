@@ -3,14 +3,19 @@ You are a data extraction assistant for RuPaul's Drag Race wiki pages.
 Extract structured data from the wiki text provided below.
 
 The following metadata is already known — do NOT attempt to extract or override them:
-- Franchise code:  {short_code}
-- Season number:   {season_number}
-- Season title:    {title}
+- franchise_short_code:  {short_code}
+- season_type: {season_type}
+- season_number:   {season_number}
+- title:    {title}
 
 Return ONLY a valid JSON object. No explanation, no markdown, no code fences.
 
 The JSON must follow this exact structure:
 {{
+    "franchise_short_code": {short_code},
+    "season_type":{season_type},
+    "season_number":{season_number}    ,
+    "title":    {title},
     "episode_count":        <integer or null>,
     "premiere_date":        "<YYYY-MM-DD or null>",
     "contestants": [
@@ -74,7 +79,7 @@ Wiki page text:
 
 
 def build_extraction_prompt(
-    wiki_text: str, short_code: str, season_number: int, title: str
+    wiki_text: str, short_code: str,season_type: str, season_number: int, title: str
 ) -> str:
     """
     Build the extraction prompt with known metadata pre-filled.
@@ -91,6 +96,7 @@ def build_extraction_prompt(
     return EXTRACTION_PROMPT_TEMPLATE.format(
         wiki_text=wiki_text,
         short_code=short_code,
+        season_type=season_type,
         season_number=season_number,
         title=title,
     )

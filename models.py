@@ -6,12 +6,12 @@ from enum import Enum
 
 # ENUM-----------------------------------------------------------------------------------
 class SeasonType(str, Enum):
-    REGULAR = "regular"
-    ALL_STARS = "all_stars"
-    VS_THE_WORLD = "vs_the_world"
-    GLOBAL = "global"
-    ROYAL = "royal"
-    OTHER = "other"
+    REGULAR = "REGULAR"
+    ALL_STARS = "ALL_STARS"
+    VS_THE_WORLD = "VS_THE_WORLD"
+    GLOBAL = "GLOBAL"
+    ROYAL = "ROYAL"
+    OTHER = "OTHER"
 
 
 class LipSyncType(str, Enum):
