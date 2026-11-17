@@ -2,6 +2,7 @@ from core.constants import Franchise
 import argparse
 import sys
 
+
 def parse_franchise(name: str) -> Franchise:
     name = name.upper()
     for franchise in Franchise:
@@ -9,24 +10,36 @@ def parse_franchise(name: str) -> Franchise:
             return franchise
     raise ValueError(f"No franchise found for : '{name}'")
 
+
 franchise_to_be_scraped = []
 
 
-parser = argparse.ArgumentParser(description="Collect data from wiki page of one or all franchises of Drag Race")
+parser = argparse.ArgumentParser(
+    description="Collect data from wiki page of one or all franchises of Drag Race"
+)
 group = parser.add_mutually_exclusive_group()
-group.add_argument("-a", "--all", help="Collect all seasons that have not been collected yet", action="store_true")
+group.add_argument(
+    "-a",
+    "--all",
+    help="Collect all seasons that have not been collected yet",
+    action="store_true",
+)
 group.add_argument("-f", "--franchise", type=str, help="Franchise code (e.g. US, UK)")
-group.add_argument("-l", "--list-franchises", action="store_true", help="List all franchises")
+group.add_argument(
+    "-l", "--list-franchises", action="store_true", help="List all franchises"
+)
 
-parser.add_argument("-s", "--season", type=int, help="Season number (optional, requires --franchise)")
+parser.add_argument(
+    "-s", "--season", type=int, help="Season number (optional, requires --franchise)"
+)
 
 args = parser.parse_args()
 
 if args.list_franchises:
-    print("Code","\t|\t", "Franchise Title")
+    print("Code", "\t|\t", "Franchise Title")
     print("--------------------------------------")
     for f in Franchise:
-        print(f.abbr,"\t|\t", f.title)
+        print(f.abbr, "\t|\t", f.title)
 elif args.all:
     print("Collecting all seasons")
     for f in Franchise:
@@ -58,5 +71,3 @@ for f in franchise_to_be_scraped:
 # Transform
 
 # Load
-
-

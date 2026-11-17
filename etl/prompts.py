@@ -71,5 +71,6 @@ Wiki page text:
 {wiki_text}
 """
 
+
 def build_extraction_prompt(wiki_text: str) -> str:
     return EXTRACTION_PROMPT_TEMPLATE.format(wiki_text=wiki_text)
