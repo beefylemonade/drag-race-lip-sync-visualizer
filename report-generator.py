@@ -1,6 +1,4 @@
-import collection
-import constants
-from constants import Franchise
+from core.constants import Franchise
 import argparse
 import sys
 
